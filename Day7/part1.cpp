@@ -4,19 +4,20 @@
 
 size_t depth = 0;
 size_t width = 0;
+int count = 0;
 
 void traverse(int i, int j, std::vector<std::string>& matrix) {
     if (i == depth - 1) {
         return;
     }
 
-    if (matrix[i][j] == '.' || matrix[i][j] == '|') {
+    if (matrix[i][j] == '.') {
         traverse(i+1, j, matrix);
     } else {
         if (matrix[i][j] == '~') return;
+        matrix[i][j] = '~';
 
-        matrix[i][j] = '~'; // visited
-        matrix[i-1][j] = '|'; // beam hit
+        count++;
         traverse(i+1, j+1, matrix);
         traverse(i+1, j-1, matrix);
     }
@@ -40,14 +41,5 @@ int main() {
         }
     }
     traverse(1, start, grid);
-
-    int count = 0;
-    for (int i {}; i < grid.size(); i++) {
-        for (int j {}; j < grid[i].size(); j++) {
-            if (grid[i][j] == '|') {
-                count++;
-            }
-        }
-    }
     std::cout << count << std::endl;
 }
